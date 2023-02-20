@@ -56,7 +56,7 @@ ROOT_URLCONF = "Gather.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["E:\\Myproject\\Gather\\Gather\\templates","E:\\Myproject\\Gather\\Users\\templates2"],
+        "DIRS": ["C:\\Users\\yuckq\\Desktop\\christ\\Project I\\Gather\\Myproject\\Gather\\Gather\\templates","C:\\Users\\yuckq\\Desktop\\christ\\Project I\\Gather\\Myproject\\Gather\\Users\\templates2"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -111,7 +111,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "Users/templates2/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
