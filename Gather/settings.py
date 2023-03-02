@@ -126,7 +126,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
 )
 # Path where media is stored  
-MEDIA_ROOT = "E:\\Myproject\\Gather\\Gather\\media"  
+MEDIA_ROOT = "Gather\\Gather\\media\\images"  
 #paste path of file where images to be stored 
 PASSWORD_HASHERS = [
   'django.contrib.auth.hashers.PBKDF2PasswordHasher',
