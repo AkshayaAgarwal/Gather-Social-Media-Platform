@@ -1,30 +1,80 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en"ng-app="myapp" ng-controller="myctrl">
 <head>
+    {% load static %}
+    
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        
     <title>Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/anim.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/boots.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/font-awsome.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustom.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'slick/slic.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'slick/slick-them.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/dash.css' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'css/responsives.css' %}">
 </head>
 <body>
+    {% block side%}
     {{info}}
     <h2>User Dashboard</h2>
     <br/><br/>
+    {% if img_obj %}
     <img src="..\media\{{img_obj}}" width="100" height="100">
-               
+    {% endif %}
+    <input type=text style="display:none;" value="{{info2}}" name="user_email"/>
+    <table border="1" width="100%">
+        <tr>
+        <td><a href="/post">Upload Post</a></td> 
+        <td><a href="/profile2">Edit Profile</a></td>
+        <td><a href="/friends">Search Friends</a></td>
+        <td><a href='/chat'>Chatroom</a></td>
+        <td><a href="/">Logout</a></td>
+    </tr>
+    </table>
+    {%endblock side%}
+    
+    <table>
+    <tr >
+    <td colspan="4">
+    {% if allposts %}
+        {% for post in allposts %}
+        <img height= 70 width=70 src="..\media\{{post.posts}}"><br/>
+        Uploaded by user : {{post.username}}
+        <br/>
+        Comments:
+        {%for c in comments %} 
+            
+            {% if c.post_id.post_id == post.post_id %}
+                {{c.comment}}
+                {% for u in allusers %}
+                    {% if u.email == c.email.email %} 
 
+                        <br/>by user : {{u.username}}
+                    {% endif %}
+                {% endfor %}
+                {% if c.date %}
+                    date :{{c.date}}
+                    
+                {% endif %}
+                <br/><br/>
+            {% endif %}
+        {% endfor %}
+        <form method="POST" action="{% url 'Add_like' %}">
+            {% csrf_token %}
+            <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+            <input type="submit" value="like">
+        </form>
+        <form method="POST" action="/comments/">
+            {% csrf_token %}
+            Enter comment <input type="text" name="comment">
+            <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+            <br/>
+            <input type="Submit" value="Post comment">
+        </form>
+        {% endfor%}
+    {% endif %}
+</td>
+</tr>
+</table>
 
+{%block main%}
+    {%endblock main%}
 </body>
 </html>

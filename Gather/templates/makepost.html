@@ -1,0 +1,18 @@
+<html>
+<body>
+{% extends "dashboard.html" %}
+{%block main%}
+
+        <form method="POST"  enctype="multipart/form-data">
+            {% csrf_token %} 
+        Upload post:   <input type="file" name="mypost" required>
+        Caption: <input type="text" name ='caption'>
+        <input type="submit">Submit</input>
+        </form>
+        <div>{{info2}}</div>
+        {% if my_post %}
+        <div><img height=90 width =90 src='..\media\posts\{{my_post}}'></div>
+        {% endif %}
+{%endblock main%}
+</body>
+</html>
