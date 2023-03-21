@@ -8,6 +8,11 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password  
 import os
 import datetime
+from pathlib import Path
+import os
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent
 
 
 def Users(request):
@@ -42,6 +47,7 @@ def Login(request):
     global allusers;
     global comments2;
     if request.method == 'POST':
+        print(BASE_DIR)
         allposts = Posts.objects.all()
         friends = Friends.objects.all()
         friends2=[]
