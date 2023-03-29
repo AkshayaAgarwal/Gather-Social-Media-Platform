@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    {% extends "dashboard.html" %}
+{%block main%}
+    <form method="POST" action="/edit_profile/" enctype="multipart/form-data">
+    <h4>Edit Profile</h4>
+        {% csrf_token %} 
+        {% if my_profile__update %} 
+        {my_profile_update}
+        {% endif %}
+        Date <input type="date" name="my_date"></input>
+        <br/>
+        Gender
+            Female<input  type="radio" name="my_gender" value="female" checked />       
+            Male<input  type="radio" name="my_gender" value="male" />
+            Others  <input  type="radio" name="my_gender" id="others" value="others" />
+          <br/>
+         College <input type="text" name="my_clg">
+         <br/>
+         Course <input type="text" name="my_course">
+         <br/>
+         Phone number <input type="tel" name="my_phone">
+        <br/>
+        Image <input type="file" name="my_img">
+
+        <input type="submit" value="Update">
+        </form>
+    {% endblock %}
+        </body>
+        </html>

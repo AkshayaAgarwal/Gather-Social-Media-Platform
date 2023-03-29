@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.db import IntegrityError
 from Users.models import Users_table
-from Users.models import Posts,Friends,Comments
+from Users.models import Posts,Friends,Comments,Requests
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password  
 import os
@@ -115,10 +115,14 @@ def Search_friend(request):
         for i in range(0,len(friend_list)):
             if friend_list[i].email1_id == user_email:
                 friend_list2.append(friend_list[i].email2)
-        
+        allreq=Requests.objects.all()
+        req_list=[]
+        for i in range(0,len(allreq)):
+            if allreq[i].email2==user_email:
+                req_list.append(allreq[i].email1.email)
         for i in range(0,len(allusers)):
             if allusers[i].college == college2 and allusers[i].course == course2 and allusers[i].email != user_email:
-                if allusers[i].email not in friend_list2:
+                if allusers[i].email not in friend_list2 and allusers[i].email not in req_list:
                     allusers2.append(allusers[i])
         return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
@@ -126,36 +130,120 @@ def Search_friend(request):
     
     
 def Add_friend(request):
-    
+    allposts = Posts.objects.all()
+    allposts2=[]
+     
+    friends = Friends.objects.all()
+    friends2=[]
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            friends2.append(friends[i].email2)  
+    for i in range(0,len(allposts)):
+        if allposts[i].email.email in friends2:
+            allposts2.append(allposts[i])
     if request.method=='POST':
         allusers=Users_table.objects.all() 
         for i in range(0,len(allusers)):
-            if allusers[i].email==user_email:
-                x=Friends(email1=allusers[i],email2=request.POST.get('friend'))
+            if allusers[i].email==request.POST.get('friend'):
+                x=Requests(email1=allusers[i],email2=user_email)
                 x.save()
                 
                 for j in range(0,len(allusers2)):
                     if allusers2[j].email == request.POST.get('friend'):
                         allusers2.remove(allusers2[j])
                         break
-                
-                friends = Friends.objects.all()
-                friends2=[]
-                for i in range(0,len(friends)):
-                    if friends[i].email1_id == user_email:
-                         friends2.append(friends[i].email2)
+               
                 
                 
-                allposts = Posts.objects.all()
-                allposts2=[]
-        
-                for i in range(0,len(allposts)):
-                    if allposts[i].email.email in friends2:
-                         allposts2.append(allposts[i])
-                return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+
+        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
         return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+
+
+
+
+
+
+def view_requests(request):
+    allusers2=Users_table.objects.all()
+    req=Requests.objects.all();
+    req2=[]
+    for i in range(0,len(req)):
+        if req[i].email1_id==user_email and req[i].status =='unconfirmed':
+            req2.append(req[i])
+    
+    return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+
+def accept_requests(request):
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    allreq=Requests.objects.all()
+    comments2=Comments.objects.all()
+    for i in range(0,len(friends)):
+            if friends[i].email1_id == user_email:
+                allusers2.append(friends[i].email2)
+    if request.method=='POST':
+        
+        for i in range(0,len(allusers)):
+            if allusers[i].email== request.POST.get('reqfriend'):
+                x=Friends(email1=allusers[i],email2=user_email)
+                x.save()
+        for i in range(0,len(allreq)):
+            if allreq[i].email1_id==user_email and allreq[i].email2 == request.POST.get('reqfriend'):
                 
+                Requests.objects.filter(rid=allreq[i].rid).delete()
+                break
+        req=Requests.objects.all()
+        req2=[]
+        for i in range(0,len(req)):
+            if req[i].email1_id==user_email:
+                req2.append(req[i])
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+    else:
+        req=Requests.objects.all()
+        req2=[]
+        for i in range(0,len(req)):
+            if req[i].email1_id==user_email:
+                req2.append(req[i])
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+    
+def reject_request(request):
+    
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    allreq=Requests.objects.all()
+    comments2=Comments.objects.all()
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            allusers2.append(friends[i].email2)
+    if request.method=='POST':
+        for i in range(0,len(allreq)):
+            if allreq[i].email1_id==user_email and allreq[i].email2 == request.POST.get('reqfriend'):
+                Requests.objects.filter(rid=allreq[i].rid).delete()
+                break
+        req=Requests.objects.all()
+        req2=[]
+        for i in range(0,len(req)):
+            if req[i].email1_id==user_email:
+                req2.append(req[i])
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+    else:
+        req=Requests.objects.all()
+        req2=[]
+        for i in range(0,len(req)):
+            if req[i].email1_id==user_email:
+                req2.append(req[i])
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+    
+
+
+
+
+
+
 def Add_comment(request):
     if request.method=='POST':
         val = request.POST.get('comment')
@@ -178,18 +266,23 @@ def Add_comment(request):
         return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
 
 def Add_like(request):
+    
     if request.method=='POST':
         flag=0
         comments2=Comments.objects.all()
         for i in range(0,len(comments2)):
-            if comments2[i].email.email == user_email and comments2[i].category=='like':
+            if comments2[i].email.email == user_email and comments2[i].post_id == request.POST.get('pid') and comments2[i].category=='like':
+                
                 flag=1
                 break
         if flag==0:
+            print("HEre")
             postid=Posts.objects.all()
             for i in range(0,len(postid)):
                 if str(postid[i].post_id)==request.POST.get('pid'):
-                    postid[i].total_likes = postid[i].total_likes+1
+                    postid[i].total_likes= postid[i].total_likes +1
+                    postid[i].save()
+                    
                     postid=postid[i]
                     break
             for i in range(0,len(allusers)):
@@ -201,3 +294,75 @@ def Add_like(request):
         return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
     else:
         return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+
+def check_friends(request):
+    print("Entered here")
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    comments2=Comments.objects.all()
+    my_friends=[]
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            allusers2.append(friends[i].email2)
+    
+    for i in range(0,len(allusers2)):
+        for j in range(0,len(allusers)):
+            if allusers2[i] == allusers[j].email:
+                my_friends.append(allusers[j])
+    
+    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+
+def view_profile(request):
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    comments2=Comments.objects.all()
+    
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            allusers2.append(friends[i].email2)
+
+    for i in range(0,len(allusers)):
+        if allusers[i].email==user_email:
+            break
+    
+    return render(request,'view_profile.html',{'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+
+def edit_profile(request):
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    comments2=Comments.objects.all()
+    
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            allusers2.append(friends[i].email2)
+    for i in range(0,len(allusers)):
+            if allusers[i].email == user_email:
+                break
+    user_photo=allusers[i].images
+    if request.method=='POST':
+        
+        if request.POST.get('my_date') != '':
+            #bool function checks if objects is empty
+            allusers[i].date=request.POST.get('my_date')
+        if  bool(request.POST.get('my_gender')):
+            allusers[i].gender=request.POST.get('my_gender')
+        if  bool(request.POST.get('my_clg')):
+            allusers[i].college = request.POST.get('my_clg')
+        if  bool(request.POST.get('my_course')):
+            allusers[i].course = request.POST.get('my_course')
+        if  bool(request.POST.get('my_phone')):
+            allusers[i].phone = request.POST.get('my_phone')
+        if  request.FILES.get('my_img') !='':
+            print("Hi")
+            allusers[i].images = request.FILES.get('my_img')
+        allusers[i].save();
+        user_photo= allusers[i].images
+        return render(request,'edit_profile.html',{'my_profile_update':'Update Successful','comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+    else:
+        return render(request,'edit_profile.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+     
+      
+            

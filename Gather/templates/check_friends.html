@@ -1,0 +1,26 @@
+{% extends "dashboard.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check friends</title>
+</head>
+<body>
+    
+{% block main %}
+<p>Your Friend List</p>
+{% if my_friends %}
+    {% for friend in my_friends %} 
+        {{friend.username}}<br/>
+        {% if friend.images %}
+        <img src="..\media\{{friend.images}}" width="100" height="100">
+         <br/>
+        {% endif %}
+    {% endfor %} 
+{% endif %}
+{% endblock main %} 
+
+</body>
+</html>

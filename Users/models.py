@@ -22,6 +22,11 @@ class Friends(models.Model):
   fid = models.AutoField(primary_key=True)
   email1=models.ForeignKey(Users_table,on_delete=models.CASCADE)
   email2=models.CharField(max_length=255,null=False)
+class Requests(models.Model):
+  rid = models.AutoField(primary_key=True)
+  email1=models.ForeignKey(Users_table,on_delete=models.CASCADE)
+  email2=models.CharField(max_length=255,null=False)
+  status=models.CharField(max_length=255,null=False,default='unconfirmed')
 class Comments(models.Model):
   cid = models.AutoField(primary_key=True)
   category = models.CharField(max_length=255,null=False)

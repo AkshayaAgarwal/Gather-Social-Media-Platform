@@ -22,9 +22,12 @@
     <table border="1" width="100%">
         <tr>
         <td><a href="/post">Upload Post</a></td> 
-        <td><a href="/profile2">Edit Profile</a></td>
+        <td><a href="/edit_profile/">Edit Profile</a></td>
         <td><a href="/friends">Search Friends</a></td>
+        <td><a href="/requests1">Friend Requests</a></td>
+        <td><a href="/check_friends/">Friend List</a></td>
         <td><a href='/chat'>Chatroom</a></td>
+        <td><a href='/view_profile'>View Profile</a></td>
         <td><a href="/">Logout</a></td>
     </tr>
     </table>
@@ -37,6 +40,7 @@
         {% for post in allposts %}
         <img height= 70 width=70 src="..\media\{{post.posts}}"><br/>
         Uploaded by user : {{post.username}}
+        
         <br/>
         Comments:
         {%for c in comments %} 
@@ -76,5 +80,7 @@
 
 {%block main%}
     {%endblock main%}
+
+
 </body>
 </html>
