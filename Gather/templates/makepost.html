@@ -4,10 +4,16 @@
 {%block main%}
 
         <form method="POST"  enctype="multipart/form-data">
-            {% csrf_token %} 
-        Upload post:   <input type="file" name="mypost" required>
-        Caption: <input type="text" name ='caption'>
-        <input type="submit">Submit</input>
+            {% csrf_token %}
+             
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="mypost" name="mypost" required>
+            <label class="custom-file-label" for="mypost">Select file</label>
+        </div>
+          
+        Caption: <input type="text" placeholder="Enter caption" name ='caption'>
+        <button type="submit" class="btn btn-sm btn-primary mt-2">Submit</button>
+
         </form>
         <div>{{info2}}</div>
         {% if my_post %}

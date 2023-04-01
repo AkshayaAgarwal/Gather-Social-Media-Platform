@@ -12,45 +12,50 @@
     <form method="POST">
     <h4>Search Friends</h4>
         {% csrf_token %} 
-        <label class="form-label select-label">Choose College</label>
-        <select style="width:85%;"  name="college" id="college">
-            <option value="1" disabled>Choose Your college</option>
-            <option value="Christ University Central Campus" > CHRIST - Deemed to be University - Central Campus </option>
-<option value="Maharanis Arts, Commerce and Management College for Women, Bangalore - 560 001.">Maharanis Arts, Commerce and Management College for Women</option>
-<option value="Govt. Arts College, Dr. B R Ambedkar Veedhi, Bangalore - 560 001.">Govt. Arts College, Dr. B R Ambedkar Veedhi</option>
-<option value="Govt. R.C.College of Commerce & Management, Bangalore - 560 001.">Govt. R.C.College of Commerce & Management</option>
-<option value="Smt.V.H.D.Central Institute of Home Science College for Women, Bangalore - 560 001.">Smt.V.H.D.Central Institute of Home Science College for Women</option>
-<option value="Nrupathunga University">Nrupathunga University</option>
-<option value="Maharanis Science College for Women, Bangalore - 560 001.">Maharanis Science College for Women</option>
-<option value="Dr.S.Gopalraju Govt. First Grade College, Anekal - 562106.">Dr.S.Gopalraju Govt. First Grade College</option>
-<option value="Govt. First Grade College, Vijayanagar, Bangalore - 560 104">Govt. First Grade College, Vijayanagar</option>
-<option value="Govt. First Grade College, K.R.Puram, Bangalore - 560 036.">Govt. First Grade College, K.R.Puram</option>
-<option value="Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar, Bangalore - 560 032.">Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar</option>
-          </select>
-          
-          <label class="form-label select-label">Choose course</label>
-          <select class="select form-control-lg" name="course" id="course">
-            <option value="1" disabled>Choose Your Course</option>
-            <option value="L.L.B">L.L.B</option>
-            <option value="M.C.A">M.C.A</option>
-            <option value="B.C.A">B.C.A</option>
-            <option value="M.B.A">M.B.A</option>
-        </select>
-        
-        <input type="submit" value="search"></input>
-        <input type="reset" value="clear"></input>
+        <div class="container">
+        <div class="row">
+            <div class="col-11">
+              <select style="width:85%;" class="select form-control-lg" name="college" id="college">
+                <option value="1" disabled>Choose Your college</option>
+                <option value="Christ University Central Campus" > CHRIST - Deemed to be University - Central Campus </option>
+  <option value="Maharanis Arts, Commerce and Management College for Women, Bangalore - 560 001.">Maharanis Arts, Commerce and Management College for Women</option>
+  <option value="Govt. Arts College, Dr. B R Ambedkar Veedhi, Bangalore - 560 001.">Govt. Arts College, Dr. B R Ambedkar Veedhi</option>
+  <option value="Govt. R.C.College of Commerce & Management, Bangalore - 560 001.">Govt. R.C.College of Commerce & Management</option>
+  <option value="Smt.V.H.D.Central Institute of Home Science College for Women, Bangalore - 560 001.">Smt.V.H.D.Central Institute of Home Science College for Women</option>
+  <option value="Nrupathunga University">Nrupathunga University</option>
+  <option value="Maharanis Science College for Women, Bangalore - 560 001.">Maharanis Science College for Women</option>
+  <option value="Dr.S.Gopalraju Govt. First Grade College, Anekal - 562106.">Dr.S.Gopalraju Govt. First Grade College</option>
+  <option value="Govt. First Grade College, Vijayanagar, Bangalore - 560 104">Govt. First Grade College, Vijayanagar</option>
+  <option value="Govt. First Grade College, K.R.Puram, Bangalore - 560 036.">Govt. First Grade College, K.R.Puram</option>
+  <option value="Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar, Bangalore - 560 032.">Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar</option>
+              </select>
+            </div>
+          </div>  
+          <div class="row">
+            <div class="col-5 mt-2">
+              <select class="select form-control-lg" name="course" id="course">
+                <option value="1" disabled>Choose Your Course</option>
+                <option>L.L.B</option>
+                <option>M.C.A</option>
+                <option>B.C.A</option>
+                <option>M.B.A</option>
+            </select>
+         </div>
+        </div>
+        <div class="mt-4 pt-2">
+            <input class="btn btn-primary btn-lg " type="submit" value="search" />
+            <input class="btn btn-primary btn-lg " type="reset" value="clear" />
+        </div>
+    </div>
     </form>
     {% if allusers2 %} 
         {% for user in allusers2 %}
             <br/>
-           Username : {{user.username}}
-           <br/>
-           College: {{user.college}}
-           <br/>
-           Course: {{user.course}}
-           <br/>
-           Gender: {{user.gender}}
-           <br/>
+           <div style="padding: 10px; margin-bottom: 10px;">
+<p style="font-weight: bold; margin-bottom: 5px;">Username: {{user.username}}</p>
+<p style="margin-bottom: 5px;">College: {{user.college}}</p>
+<p style="margin-bottom: 5px;">Course: {{user.course}}</p>
+<p style="margin-bottom: 5px;">Gender: {{user.gender}}</p><br/>
            {% if user.images %}
                 Profile photo: <img src="..\media\{{user.images}}" width="40" height="40">
             {% endif %}
@@ -58,8 +63,11 @@
                 <form method= "POST" action="{% url 'Add_friend' %}">
                     {% csrf_token %}
                     <input type="text" name="friend" value="{{user.email}}" style="display:none">
-                    
-                    <input type="Submit" value="Add friend">
+                    <div class="pt-2">
+                        <input class="btn btn-primary btn-lg " type="Submit" value="Add Friend" />
+                        
+                    </div>
+                
     
                 </form>
                  

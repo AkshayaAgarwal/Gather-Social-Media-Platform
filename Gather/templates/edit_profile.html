@@ -9,29 +9,73 @@
 <body>
     {% extends "dashboard.html" %}
 {%block main%}
-    <form method="POST" action="/edit_profile/" enctype="multipart/form-data">
+<form method="POST" action="/edit_profile/" enctype="multipart/form-data">
     <h4>Edit Profile</h4>
-        {% csrf_token %} 
-        {% if my_profile__update %} 
-        {my_profile_update}
-        {% endif %}
-        Date <input type="date" name="my_date"></input>
-        <br/>
-        Gender
-            Female<input  type="radio" name="my_gender" value="female" checked />       
-            Male<input  type="radio" name="my_gender" value="male" />
-            Others  <input  type="radio" name="my_gender" id="others" value="others" />
-          <br/>
-         College <input type="text" name="my_clg">
-         <br/>
-         Course <input type="text" name="my_course">
-         <br/>
-         Phone number <input type="tel" name="my_phone">
-        <br/>
-        Image <input type="file" name="my_img">
+    {% csrf_token %} 
+    {% if my_profile__update %} 
+      {my_profile_update}
+    {% endif %}
+    <div class="form-group">
+      <label for="my_date">Date</label>
+      <input type="date" class="form-control" id="my_date" name="my_date">
+    </div>
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="female" name="my_gender" value="female" checked>
+        <label class="form-check-label" for="female">Female</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="male" name="my_gender" value="male">
+        <label class="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="others" name="my_gender" value="others">
+        <label class="form-check-label" for="others">Others</label>
+      </div>
+    </div>
 
-        <input type="submit" value="Update">
-        </form>
-    {% endblock %}
+
+   <div class="container">
+        <div class="row">
+            <div class="col-11">
+              <select style="width:85%;" class="select form-control-lg" id="my_clg" name="my_clg">
+                <option value="1" disabled>Choose Your college</option>
+                <option value="Christ University Central Campus" > CHRIST - Deemed to be University - Central Campus </option>
+  <option value="Maharanis Arts, Commerce and Management College for Women, Bangalore - 560 001.">Maharanis Arts, Commerce and Management College for Women</option>
+  <option value="Govt. Arts College, Dr. B R Ambedkar Veedhi, Bangalore - 560 001.">Govt. Arts College, Dr. B R Ambedkar Veedhi</option>
+  <option value="Govt. R.C.College of Commerce & Management, Bangalore - 560 001.">Govt. R.C.College of Commerce & Management</option>
+  <option value="Smt.V.H.D.Central Institute of Home Science College for Women, Bangalore - 560 001.">Smt.V.H.D.Central Institute of Home Science College for Women</option>
+  <option value="Nrupathunga University">Nrupathunga University</option>
+  <option value="Maharanis Science College for Women, Bangalore - 560 001.">Maharanis Science College for Women</option>
+  <option value="Dr.S.Gopalraju Govt. First Grade College, Anekal - 562106.">Dr.S.Gopalraju Govt. First Grade College</option>
+  <option value="Govt. First Grade College, Vijayanagar, Bangalore - 560 104">Govt. First Grade College, Vijayanagar</option>
+  <option value="Govt. First Grade College, K.R.Puram, Bangalore - 560 036.">Govt. First Grade College, K.R.Puram</option>
+  <option value="Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar, Bangalore - 560 032.">Lalbahadur Sastry Govt. Arts, Science and Commerce College, R.T.Nagar</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-5 mt-2">
+              <select class="select form-control-lg" name="my_course" id="my_course">
+                <option value="1" disabled>Choose Your Course</option>
+                <option>L.L.B</option>
+                <option>M.C.A</option>
+                <option>B.C.A</option>
+                <option>M.B.A</option>
+            </select>
+         </div>
+        </div>
+    <div class="form-group">
+      <label for="my_phone">Phone number</label>
+      <input type="tel" class="form-control" id="my_phone" name="my_phone">
+    </div>
+    <div class="form-group">
+      <label for="my_img">Image</label>
+      <input type="file" class="form-control-file" id="my_img" name="my_img">
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  {% endblock %}
         </body>
         </html>
