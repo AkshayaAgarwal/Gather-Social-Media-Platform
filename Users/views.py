@@ -1,15 +1,12 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse 
-from django.template import loader
+from django.shortcuts import render
 from django.db import IntegrityError
 from Users.models import Users_table
 from Users.models import Posts,Friends,Comments,Requests
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password  
-import os
 import datetime
 from pathlib import Path
-import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
