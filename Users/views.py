@@ -269,14 +269,20 @@ def Add_like(request):
     
     if request.method=='POST':
         flag=0
+        
         comments2=Comments.objects.all()
         for i in range(0,len(comments2)):
-            if comments2[i].email.email == user_email and comments2[i].post_id == request.POST.get('pid') and comments2[i].category=='like':
+            
+            if comments2[i].email_id == user_email:
                 
-                flag=1
-                break
+                if comments2[i].category == 'like':
+                  
+                  if comments2[i].post_id_id == int(request.POST.get('pid')):
+                        
+                        flag=1
+                        break
         if flag==0:
-            print("HEre")
+            
             postid=Posts.objects.all()
             for i in range(0,len(postid)):
                 if str(postid[i].post_id)==request.POST.get('pid'):
@@ -317,6 +323,7 @@ def view_profile(request):
     allusers2=[]
     allusers=Users_table.objects.all()
     friends =Friends.objects.all() 
+    allposts3 = Posts.objects.filter(email_id = user_email)
     comments2=Comments.objects.all()
     
     for i in range(0,len(friends)):
@@ -327,7 +334,7 @@ def view_profile(request):
         if allusers[i].email==user_email:
             break
     
-    return render(request,'view_profile.html',{'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+    return render(request,'view_profile.html',{'my_posts':allposts3,'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
 
 def edit_profile(request):
     allusers2=[]

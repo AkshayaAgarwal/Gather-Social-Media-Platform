@@ -17,7 +17,14 @@ Date: {{my_profile.date}}<br/>
 Phone number: {{my_profile.phone}}<br/>
 <img src="..\media\{{my_profile.images}}" width="40" height="40">
 <br/>
-
+My posts : 
+{% if my_posts %}
+{% for p in my_posts %}
+<img src="..\media\{{p.posts}}" width="200" height="400">
+Caption: {{p.caption}}
+<br/>
+{% endfor %}
+{% endif %}
 {%endblock%}
 </body>
 </html>
