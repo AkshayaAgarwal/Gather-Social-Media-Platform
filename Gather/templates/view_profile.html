@@ -18,9 +18,20 @@ Phone number: {{my_profile.phone}}<br/>
 <img src="..\media\{{my_profile.images}}" width="100" height="100">
 <br/>
 My posts : 
+<br/>
 {% if my_posts %}
 {% for p in my_posts %}
-<img src="..\media\{{p.posts}}" width="300" height="300">
+{% if '.JPG' in p.posts|stringformat:"s" %}
+    <img src="..\media\posts\{{p.posts}}" width="300" height="300">
+{% elif '.JPEG' in p.posts|stringformat:"s" %}
+    <img src="..\media\posts\{{p.posts}}" width="300" height="300">
+{% elif '.PNG' in p.posts|stringformat:"s" %}
+    <img src="..\media\posts\{{p.posts}}" width="300" height="300">
+{% elif '.mp4' in p.posts|stringformat:"s" %}
+    <video width="320" height="240" controls >
+    <source src='..\media\posts\{{p.posts}}' type="video/mp4">
+    </video>
+{% endif %}
 <br/>
 Caption: {{p.caption}}
 <br/>
