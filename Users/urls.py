@@ -14,6 +14,7 @@ urlpatterns = [
     path('rej_acc2/',views.reject_request,name='reject_request'),
     path("check_friends/",views.check_friends,name='check_friends'),
     path('view_profile/',views.view_profile,name='view_profile'),
-    path('edit_profile/',views.edit_profile,name='edit_profile')]   
+    path('edit_profile/',views.edit_profile,name='edit_profile'),
+    path('del_friend/',views.del_friend,name='del_friend'),]   
 
 

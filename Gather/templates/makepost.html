@@ -1,4 +1,22 @@
 <html>
+<head>
+<script>
+    function filevalid()
+      {
+        var input = document.getElementById('mypost');
+        var path = input.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(path))
+        {
+          alert("Invalid file input");
+          input.value='';
+          return false;
+        }
+        else
+        return true;
+      }
+    </script>
+</head>
 <body>
 {% extends "dashboard.html" %}
 {%block main%}
@@ -6,18 +24,18 @@
         <form method="POST"  enctype="multipart/form-data">
             {% csrf_token %}
              
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="mypost" name="mypost" required>
-            <label class="custom-file-label" for="mypost">Select file</label>
-        </div>
+        
+            <input type="file"  id="mypost" name="mypost" onchange="return filevalid();" required>
+            <label  for="mypost">Select file</label>
+        
           
         Caption: <input type="text" placeholder="Enter caption" name ='caption'>
-        <button type="submit" class="btn btn-sm btn-primary mt-2">Submit</button>
+        <button type="submit" class="btn  btn-primary mt-2">Post</button>
 
         </form>
         <div>{{info2}}</div>
         {% if my_post %}
-        <div><img height=90 width =90 src='..\media\posts\{{my_post}}'></div>
+        <div><img height=100 width =100 src='..\media\posts\{{my_post}}'></div>
         {% endif %}
 {%endblock main%}
 </body>

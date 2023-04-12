@@ -15,7 +15,15 @@
     {% for i in requests %}
         {% for j in allusers %} 
             {% if i.email2 == j.email %} 
-                <p>{{j.username}}</p>
+                Username <p style="font-weight: 700;">{{j.username}}</p>
+                <br/>
+                College <p>{{j.college}}</p>
+                <br/>
+                Course <p>{{j.course}}</p>
+                <br/>
+                Id card image <img src="../media/{{j.images}}" width="70" height="70" ">
+                <br/>
+                <br/>
                 <form method="POST" action="/rej_acc1/">
                     {% csrf_token %}
                 <input type="text" value="{{j.email}}" name="reqfriend" style="display:none;">

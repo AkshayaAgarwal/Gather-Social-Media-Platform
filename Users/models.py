@@ -18,6 +18,7 @@ class Posts(models.Model):
   posts = models.FileField(upload_to='posts')
   caption = models.CharField(null=True,max_length=255)
   total_likes = models.BigIntegerField(default=0)
+  
 class Friends(models.Model):
   fid = models.AutoField(primary_key=True)
   email1=models.ForeignKey(Users_table,on_delete=models.CASCADE)

@@ -9,20 +9,32 @@
 
     
 </head>
-<body>
+
     
 {% block main %}
-<p>Your Friend List</p>
+<body >
+<p style="font-weight: 700;font-size: larger;">Your Friend List</p>
 {% if my_friends %}
     {% for friend in my_friends %} 
-        {{friend.username}}<br/>
+    <p style="font-weight: 700;">
+        Name: {{friend.username}}<br/>
+        Course: {{friend.course}}<br/>
+        College: {{friend.college}}<br/>
         {% if friend.images %}
-        <img src="..\media\{{friend.images}}" width="100" height="100">
-         <br/>
+        </p>
+        <img src="..\media\{{friend.images}}" width="200" height="200" style="border:10px solid blue">
+                
         {% endif %}
+        <form style="align-items: start;" action="/del_friend/" method="POST">
+            {% csrf_token %}
+            <input type="text" name="my_friend" value={{friend.email}} style="display: none;">
+            <input type="submit" class="btn  btn-primary mt-2" value="Remove {{friend.username}}"></input>
+        </form>
+        <br/>
     {% endfor %} 
 {% endif %}
+</body>
 {% endblock main %} 
 
-</body>
+
 </html>

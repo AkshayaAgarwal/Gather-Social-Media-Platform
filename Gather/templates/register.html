@@ -8,7 +8,119 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register</title>
+    <script>
+       function datevalid()
+        {   var dob= new Date(document.getElementById("date").value);
+            var d = new Date();
+            var agedt = Date.now() - dob.getTime();
+            var agedt2 = new Date(agedt);
+            age= agedt2.getUTCFullYear() - 1970;
+            
+            if (dob.getTime() > d.getTime() )
+                 {alert("Invalid date of birth");
+                 dob.value='';}
+             else if(age < 18)
+            {alert("Age lesser than 18!");
+              dob.value='';}
+            
+            
+            //Date.now() returns the number of milliseconds since January 1, 1970.
+            // Notes. Date.now() is a static method of the Date object. 
+            //getTime() returns the number of milliseconds since January 1, 1970 00:00:00
+            //The getUTCFullYear() method returns the year in the specified date according to universal time. 
+
+        }
+      function emailvalid()
+      { email = document.getElementById('email');
+       
+        var regex=/^([a-z0-9\.-]+)@([a-z0-9]+)\.([a-z]{1,20})(.[a-z]{2,3})$/;
+        var regex2 = /^([a-z0-9\.-]+)@([a-z0-9]+)\.([a-z]{2,3})$/;
+            if(!(email.value.match(regex) || email.value.match(regex2)))
+            {alert("Invalid email id");
+            email.value='';}
+            else if (email.value== null)
+            alert("Invalid email id");
+           
+      }
+      function usernamevalid()
+      {
+        var regex=/^([A-Za-z0-9_ ]{5,30})$/;
+        input = document.getElementById('username');
+        if(!input.value.match(regex))
+         { input.value='';
+          alert("Invalid username");
+          return false;
+         }
+         else if(input.value == null)
+         {
+          return false;
+         }
+         else
+         {
+          return true;
+         }
+      }
+      function passwordvalid()
+      {
+        var regex=/(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[~`!@#$%^&*-+_></\?:;=,.")(}{[]|]+){6,8}/;
+        input = document.getElementById('password');
+       
+        if(!input.value.match(regex))
+          {alert("Password must contain 8 - 20 characters \n it must have atleast 1 lowercase letter\n atleast 1 uppercase letter \n atleast 1 digit \n and atleast 1 special character and no spaces ");
+            input.value='';
+             return false;
+           }
+          else if(input.value == null)
+          { alert("Invalid password - Password cant be null !");
+            return false;
+          }
+        else
+         {
+          return true;
+         }
+      }
+      function passwordvalid2()
+      { input1 = document.getElementById('password');
+        input2 = document.getElementById('password2')
+        if( input1 != input2)
+        { input2.value='';
+          alert("Confirm password and actual password are not same !");
+          return false; 
+        }
+        else
+          return true;
+      }
+      function filevalid()
+      {
+        var input = document.getElementById('image');
+        var path = input.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(path))
+        {
+          alert("Invalid file input");
+          input.value='';
+          return false;
+        }
+        else
+        return true;
+      }
+
+      function phonevalid()
+{ var inputtxt = document.getElementById('number');
+  var phoneno = /^\+?([0-9]{2})\)?[-]?([0-9]{10})$/;
+  if(inputtxt.value.match(phoneno))
+        {
+      return true;
+        }
+      else
+        {
+          inputtxt.value='';
+        alert("invalid phone number");
+        return false;
+        }
+}
+    </script>
 </head>
 <body>
   <h3 style="color:azure">{{error}}</h3>
@@ -28,15 +140,16 @@
                         <div class="col-md-6 mb-4">
         
                           <div class="form-outline">
-                            <input type="text" id="username" name="username" class="form-control form-control-lg" />
+                            <input type="text" required="required" onchange = "return usernamevalid()" id="username" name="username" class="form-control form-control-lg" />
                             <label class="form-label" for="username">Username</label>
+                            <p>Characters A-Z a-z 0-9 and underscores are allowed, username must be 5-30 characters long </p>
                           </div>
         
                         </div>
                         <div class="col-md-6 mb-4">
         
                           <div class="form-outline">
-                            <input type="date" id="date" name="date" class="form-control form-control-lg" />
+                            <input type="date" required="required" onchange="datevalid()" id="date" name="date" class="form-control form-control-lg" />
                             <label class="form-label" for="date">DOB</label>
                           </div>
         
@@ -47,7 +160,7 @@
                       <div class="col-md-6 mb-4 d-flex align-items-center">
       
                         <div class="form-outline datepicker w-100">
-                          <input type="email" class="form-control form-control-lg" name="email" id="email" />
+                          <input type="email" required="required" onchange='emailvalid()' required class="form-control form-control-lg" name="email" id="email" />
                           <label for="email" class="form-label">Email</label>
                         </div>
       
@@ -57,7 +170,7 @@
                         <h6 class="mb-2 pb-1">Gender: </h6>
       
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="gender" id="female"
+                          <input class="form-check-input"  type="radio" name="gender" id="female"
                             value="Female" checked />
                           <label class="form-check-label" for="female">Female</label>
                         </div>
@@ -81,7 +194,7 @@
                       <div class="col-md-6 mb-4 pb-2">
       
                         <div class="form-outline">
-                          <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                          <input type="password" required="required" onchange = "return passwordvalid()"  id="password" name="password" class="form-control form-control-lg" />
                           <label class="form-label" for="password">Password</label>
                         </div>
       
@@ -89,20 +202,20 @@
                       <div class="col-md-6 mb-4 pb-2">
       
                         <div class="form-outline">
-                          <input type="password" id="password2" name="password2" class="form-control form-control-lg" />
+                          <input type="password" onchange="return passwordvalid2()" required id="password2" name="password2" class="form-control form-control-lg" />
                           <label class="form-label" for="password2">Confirm Password</label>
                         </div>
       
                       </div>
                     </div>
                     <div class="form-outline">
-                        <input type="tel" id="number" name="number" class="form-control form-control-lg" />
+                        <input type="tel" required="required" placeholder = "+91-0123456789" id="number" onchange = 'return phonevalid()' name="number" class="form-control form-control-lg" />
                         <label class="form-label" for="number">Phone Number</label>
                       </div>
                       <div class="row">
                         <div class="col-12">
                           
-                          <select style="width:85%;" class="select form-control-lg" name="college" id="college">
+                          <select  required="required" style="width:85%;" class="select form-control-lg" name="college" id="college">
                             <option value="1" disabled>Choose Your college</option>
                             <option value="Christ University Central Campus" > CHRIST - Deemed to be University - Central Campus </option>
               <option value="Maharanis Arts, Commerce and Management College for Women, Bangalore - 560 001.">Maharanis Arts, Commerce and Management College for Women</option>
@@ -123,7 +236,7 @@
                     <div class="row">
                         <div class="col-12">
         
-                          <select class="select form-control-lg" name="course" id="course">
+                          <select required="required" class="select form-control-lg" name="course" id="course">
                             <option value="1" disabled>Choose Your Course</option>
                             <option>L.L.B</option>
                             <option>M.C.A</option>
@@ -135,10 +248,11 @@
                       </div>
                     </div>
                     <br/><br/>
-                    Upload image of college id : <input type="file" name="image" id="image"/>
+                    Upload image of college id : <input type="file" required="required" onchange= 'return filevalid()' name="image" id="image"/>
+                    <pre>Image files with extension .jpg, .jpeg, .png are allowed </pre>
                     <br/><br/>
                     <div class="mt-4 pt-2">
-                      <input class="btn btn-primary btn-lg " type="submit" value="Submit" />
+                      <input class="btn btn-primary btn-lg " type="submit" value="Sign up" />
               
                       <input class="btn btn-primary btn-lg mx-2" type="reset" value="Reset" />
                     </div>

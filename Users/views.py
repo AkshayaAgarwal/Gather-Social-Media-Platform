@@ -37,6 +37,7 @@ def Users(request):
 
 # Create your views here.
 def Login(request):
+    
     global user_email;
     global user_photo;
     global allposts2;
@@ -65,12 +66,12 @@ def Login(request):
         flag=0
         for i in range(0,len(allusers)):
            
-            if check_password(request.POST.get('password'),allusers[i].password) and allusers[i].username==request.POST.get('username') and allusers[i].email==request.POST.get('email'):
+            if check_password(request.POST.get('password'),allusers[i].password)  and allusers[i].email==request.POST.get('email'):
                flag=flag+1
                user_email = request.POST.get('email');
                user_photo = allusers[i].images;
                user_name=allusers[i].username;
-               return render(request,"dashboard.html",{'comments':comments2,'allusers':allusers,'info2':request.POST.get('email'),'info':'User '+request.POST.get('username')+ ' logged in successfully !','img_obj':allusers[i].images,'allposts':allposts2})
+               return render(request,"dashboard.html",{'comments':comments2,'allusers':allusers,'info2':request.POST.get('email'),'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
         if flag==0:
             return render(request,"login.html",{'info':'Incorrect username or password !'})
     else:
@@ -174,6 +175,7 @@ def view_requests(request):
 
 def accept_requests(request):
     allusers2=[]
+    global allposts2
     allusers=Users_table.objects.all()
     friends =Friends.objects.all() 
     allreq=Requests.objects.all()
@@ -186,6 +188,8 @@ def accept_requests(request):
         for i in range(0,len(allusers)):
             if allusers[i].email== request.POST.get('reqfriend'):
                 x=Friends(email1=allusers[i],email2=user_email)
+                y = Friends(email1_id= user_email,email2=request.POST.get('reqfriend'))
+                y.save()
                 x.save()
         for i in range(0,len(allreq)):
             if allreq[i].email1_id==user_email and allreq[i].email2 == request.POST.get('reqfriend'):
@@ -197,6 +201,25 @@ def accept_requests(request):
         for i in range(0,len(req)):
             if req[i].email1_id==user_email:
                 req2.append(req[i])
+        allposts = Posts.objects.all()
+        friends = Friends.objects.all()
+        friends2=[]
+        for i in range(0,len(friends)):
+            if friends[i].email1_id == user_email:
+                friends2.append(friends[i].email2)
+        
+        
+        comments2=Comments.objects.all()
+        allposts2=[]
+        
+        for i in range(0,len(allposts)):
+            
+            if allposts[i].email.email in friends2:
+                
+                allposts2.append(allposts[i])
+        
+        
+    
         return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
         req=Requests.objects.all()
@@ -299,7 +322,7 @@ def Add_like(request):
         return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
 
 def check_friends(request):
-    print("Entered here")
+    
     allusers2=[]
     allusers=Users_table.objects.all()
     friends =Friends.objects.all() 
@@ -334,6 +357,7 @@ def view_profile(request):
     return render(request,'view_profile.html',{'my_posts':allposts3,'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
 
 def edit_profile(request):
+    global user_photo
     allusers2=[]
     allusers=Users_table.objects.all()
     friends =Friends.objects.all() 
@@ -359,7 +383,7 @@ def edit_profile(request):
             allusers[i].course = request.POST.get('my_course')
         if  bool(request.POST.get('my_phone')):
             allusers[i].phone = request.POST.get('my_phone')
-        if  request.FILES.get('my_img') !='':
+        if  bool(request.FILES.get('my_img')):
             print("Hi")
             allusers[i].images = request.FILES.get('my_img')
         allusers[i].save();
@@ -369,4 +393,27 @@ def edit_profile(request):
         return render(request,'edit_profile.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
      
       
-            
+def del_friend(request):
+    allusers2=[]
+    allusers=Users_table.objects.all()
+    friends =Friends.objects.all() 
+    comments2=Comments.objects.all()
+    my_friends=[]
+    for i in range(0,len(friends)):
+        if friends[i].email1_id == user_email:
+            allusers2.append(friends[i].email2)
+    
+    for i in range(0,len(allusers2)):
+        for j in range(0,len(allusers)):
+            if allusers2[i] == allusers[j].email:
+                my_friends.append(allusers[j])
+    if request.method == 'POST':
+        for i in range(0,len(friends)):
+         if friends[i].email1_id == user_email and friends[i].email2 == request.POST.get('my_friend'):
+            Friends.objects.filter(fid = friends[i].fid).delete()
+         if friends[i].email1_id == request.POST.get('my_friend') and friends[i].email2 == user_email:
+            Friends.objects.filter(fid = friends[i].fid).delete()
+        my_friends=Friends.objects.filter(email1_id = user_email)
+        
+    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+

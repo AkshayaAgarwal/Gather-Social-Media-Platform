@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 </head>
-<body>
+<body style="font-size:30;font-style:medium;font-weight: 700;">
     {% extends "dashboard.html" %}
 {%block main%}
 Username : {{ my_profile.username}} <br/>
@@ -15,12 +15,13 @@ College: {{my_profile.college}}<br/>
 Course: {{my_profile.course}}<br/>
 Date: {{my_profile.date}}<br/>
 Phone number: {{my_profile.phone}}<br/>
-<img src="..\media\{{my_profile.images}}" width="40" height="40">
+<img src="..\media\{{my_profile.images}}" width="100" height="100">
 <br/>
 My posts : 
 {% if my_posts %}
 {% for p in my_posts %}
 <img src="..\media\{{p.posts}}" width="200" height="400">
+<br/>
 Caption: {{p.caption}}
 <br/>
 {% endfor %}
