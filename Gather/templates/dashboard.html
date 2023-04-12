@@ -277,10 +277,21 @@ form span {
     {% if allposts %}
         {% for post in allposts %}
             
-                  
-          <img height= 200 width=200 src="..\media\{{post.posts}}"><br/>
-             
-              
+          {% if '.JPG' in post.posts|stringformat:"s"  %}      
+            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
+          {% endif %} 
+          {% if '.PNG' in post.posts|stringformat:"s" %}
+            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
+          {% endif %} 
+          {% if '.JPEG' in post.posts|stringformat:"s" %}
+            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
+          {% endif %} 
+          {% if '.mp4' in post.posts|stringformat:"s" %}
+            <video  width="400" height="400" controls >
+            <source src='..\media\posts\{{post.posts}}' type="video/mp4">
+            </video>
+          {% endif %}
+           <br/>   
           Uploaded by user : {{post.username}}
           <br/>
           On date: {{post.date}}

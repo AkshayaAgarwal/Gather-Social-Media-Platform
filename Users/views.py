@@ -80,20 +80,23 @@ def Login(request):
 
 def Add_post(request):
     if request.method == 'POST':
-        mypost = request.FILES.get('mypost')
+        mypost = str(request.FILES.get('mypost'))
         mycap=''
         if len(request.POST.get('caption'))!= 0:
             mycap = request.POST.get('caption')
         date2 = datetime.datetime.now()
         allusers=Users_table.objects.all()
         comments2=Comments.objects.all()
-
         
+        if mypost.endswith('.JPG') or mypost.endswith('.JPEG') or mypost.endswith('.PNG'):
+            category = 'image'
+        elif mypost.endswith('.mp4'):  
+            category = 'video'
         for i in range(0,len(allusers)):
             if allusers[i].email==user_email:
                 apost=Posts(email=allusers[i],username = allusers[i].username,date=date2,posts=mypost,caption=mycap,total_likes =0)
                 apost.save();
-                return render(request,"makepost.html",{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allposts':allposts2,'img_obj':user_photo,'info2':'Post uploaded sucesssfully !','my_post':request.FILES.get('mypost')})
+                return render(request,"makepost.html",{'category':category,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allposts':allposts2,'img_obj':user_photo,'info2':'Post uploaded sucesssfully !','my_post':request.FILES.get('mypost')})
     else:
         allusers=Users_table.objects.all();
         comments2=Comments.objects.all();

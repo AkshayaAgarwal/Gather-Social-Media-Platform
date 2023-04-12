@@ -5,7 +5,7 @@
       {
         var input = document.getElementById('mypost');
         var path = input.value;
-        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.mp4)$/i;
         if (!allowedExtensions.exec(path))
         {
           alert("Invalid file input");
@@ -15,6 +15,7 @@
         else
         return true;
       }
+      
     </script>
 </head>
 <body>
@@ -33,9 +34,17 @@
         <button type="submit" class="btn  btn-primary mt-2">Post</button>
 
         </form>
-        <div>{{info2}}</div>
+        <h4>{{info2}}</h4>
         {% if my_post %}
-        <div><img height=100 width =100 src='..\media\posts\{{my_post}}'></div>
+          {% if category == 'image' %}
+            <div><img height=100 width =100 src='..\media\posts\{{my_post}}' id="disp" >
+          {% endif %}
+          {% if category == 'video' %}
+            <video id="disp2" width="320" height="240" controls >
+            <source src='..\media\posts\{{my_post}}' type="video/mp4">
+            </video>
+          {% endif %}
+        </div>
         {% endif %}
 {%endblock main%}
 </body>
