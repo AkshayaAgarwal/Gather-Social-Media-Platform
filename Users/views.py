@@ -7,6 +7,13 @@ from django.contrib.auth.hashers import check_password
 import datetime
 from pathlib import Path
 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+import random
+import string
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
@@ -80,7 +87,8 @@ def Login(request):
 
 def Add_post(request):
     if request.method == 'POST':
-        mypost = str(request.FILES.get('mypost'))
+        mypost2 = str(request.FILES.get('mypost'))
+        mypost = request.FILES.get('mypost')
         mycap=''
         if len(request.POST.get('caption'))!= 0:
             mycap = request.POST.get('caption')
@@ -88,9 +96,8 @@ def Add_post(request):
         allusers=Users_table.objects.all()
         comments2=Comments.objects.all()
         
-        if mypost.endswith('.JPG') or mypost.endswith('.JPEG') or mypost.endswith('.PNG'):
-            category = 'image'
-        elif mypost.endswith('.mp4'):  
+        category = 'image'
+        if mypost2.endswith('.mp4') or mypost2.endswith('.MP4'):  
             category = 'video'
         for i in range(0,len(allusers)):
             if allusers[i].email==user_email:
@@ -420,3 +427,34 @@ def del_friend(request):
         
     return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
 
+
+def forgot(request):
+    return render(request,'forgot.html')
+
+
+def generate_random_string():
+    length = random.randint(5, 8)  # Random length between 5 and 8
+    characters = string.ascii_letters + string.digits + string.punctuation  # Special characters, numbers, and capital letters
+    return ''.join(random.choice(characters) for _ in range(length))
+
+# Example usage
+random_string = generate_random_string()
+
+def forgotpasswordprocess(request):
+    print(request.POST)
+    user_email = request.POST['useremail']
+    try:
+        db_data = Users_table.objects.get(email=user_email)
+        # Fetch password from db_data
+        db_data.password=make_password(random_string)
+        db_data.save();
+        subject = 'Forgot Password'
+        message = ' Your Password is  ' + random_string
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [user_email,]
+        send_mail(subject, message, email_from, recipient_list)
+        messages.success(request, 'Password sent to email')
+        return redirect('Login')  # Replace with the correct URL pattern name for login
+    except Users_table.DoesNotExist:
+        messages.error(request, 'Wrong email details')
+        return render(request, 'forgot.html')  # Render the forgot.html template with an error message

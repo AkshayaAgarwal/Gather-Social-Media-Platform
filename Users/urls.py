@@ -15,6 +15,9 @@ urlpatterns = [
     path("check_friends/",views.check_friends,name='check_friends'),
     path('view_profile/',views.view_profile,name='view_profile'),
     path('edit_profile/',views.edit_profile,name='edit_profile'),
-    path('del_friend/',views.del_friend,name='del_friend'),]   
+    path('forgot.html/',views.forgot,name='forgot.html'),
+    path('forgotpasswordprocess',views.forgotpasswordprocess,name='forgotpasswordprocess'),
+    path('del_friend/',views.del_friend,name='del_friend'),
+    ]   
 
 

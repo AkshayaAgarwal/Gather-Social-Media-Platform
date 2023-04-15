@@ -1,344 +1,352 @@
 <!DOCTYPE html>
 
-<html lang="en"ng-app="myapp" ng-controller="myctrl">
+<html lang="en" ng-app="myapp" ng-controller="myctrl">
+
 <head>
-    
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-   
-        
-    <title>Dashboard</title>
-    <style type="text/css">
-.containerform {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.like,
-.comment {
-  margin-right: 10px;
-}
-
-.comment {
-  margin-right: 0;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.form-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.like-button,
-.form-button {
-  display: block;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: #fff;
-  font-size: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.like-button:hover,
-.form-button:hover {
-  background-color: #3e8e41;
-}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 
-        .sidenav {
-            height: 100%;
-            width: 150px;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #3f51b5;
-            overflow-x: hidden;
-            padding-top: 20px;
-        }
-    
-        .sidenav a {
-            padding: 12px 0;
-            text-decoration: none;
-            color: #fff;
-            display: block;
-            text-align: center;
-            font-size: 22px;
-            transition: all 0.3s ease-in-out;
-        }
-    
-        .sidenav a:hover {
-            background-color: #fff;
-            color: #3f51b5;
-        }
-    
-        .main {
-            margin-left: 80px;
-            padding: 0px 20px;
-            background-color: #f9f9f9;
-            height: 100%;
-        }
-        .info {
-        font-size: 18px;
-        color: #fff;
-        background-color: #3f51b5;;
-        padding: 10px;
-        border-radius: 5px;
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+
+  <title>Dashboard</title>
+  <style type="text/css">
+    .containerform {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
+    .like,
+    .comment {
+      margin-right: 10px;
+    }
+
+    .comment {
+      margin-right: 0;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .like-button,
+    .form-button {
+      display: block;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .like-button:hover,
+    .form-button:hover {
+      background-color: #3e8e41;
+    }
+
+
+    .sidenav {
+      height: 100%;
+      width: 150px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #3f51b5;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .sidenav a {
+      padding: 12px 0;
+      text-decoration: none;
+      color: #fff;
+      display: block;
+      text-align: center;
+      font-size: 22px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .sidenav a:hover {
+      background-color: #fff;
+      color: #3f51b5;
+    }
+
+    .main {
+      margin-left: 80px;
+      padding: 0px 20px;
+      background-color: #f9f9f9;
+      height: 100%;
+    }
+
+    .info {
+      font-size: 18px;
+      color: #fff;
+      background-color: #3f51b5;
+      ;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
     h2 {
-        font-size: 30px;
-        color: #333;
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 40px;
+      font-size: 30px;
+      color: #333;
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 40px;
     }
-    body{
-			background-color: #ffffff;
-            background-size: cover;
-		}
-        form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  max-width: 500px;
-  
-  border-radius: 10px;
-  
-}
 
-form input[type="text"], 
-form input[type="password"], 
-form select {
-  width: 100%;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-}
+    body {
+      background-color: #ffffff;
+      background-size: cover;
+    }
 
-form button[type="submit"] {
-  background-color: #007bff;;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 500px;
 
-form button[type="submit"]:hover {
-  background-color: #3e8e41;
-}
+      border-radius: 10px;
 
-form label {
-  font-weight: bold;
-}
+    }
 
-form span {
-  color: red;
-}
-.like-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #fd4d4d;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    form input[type="text"],
+    form input[type="password"],
+    form select {
+      width: 100%;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
 
-.like-button:hover {
-  background-color: #ff7575;
-}
+    form button[type="submit"] {
+      background-color: #007bff;
+      ;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.fa-heart {
-  margin-right: 8px;
-}
+    form button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
 
-.comment-form {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  
-}
+    form label {
+      font-weight: bold;
+    }
 
-.form-group {
-  margin-bottom: 20px;
-}
+    form span {
+      color: red;
+    }
 
-.form-label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 16px;
-}
+    .like-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #fd4d4d;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.form-input {
-  width: 100%;
-  padding: 12px 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
+    .like-button:hover {
+      background-color: #ff7575;
+    }
 
-.form-button {
-  display: block;
-  margin: 0 auto;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .fa-heart {
+      margin-right: 8px;
+    }
 
-.form-button:hover {
-  background-color: #3e8e41;
-}
+    .comment-form {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
 
-.mt-2
-{
-  margin-top: 1em;
-}
+    }
 
-    </style>
-    
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-button {
+      display: block;
+      margin: 0 auto;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .form-button:hover {
+      background-color: #3e8e41;
+    }
+
+    .mt-2 {
+      margin-top: 1em;
+    }
+  </style>
+
 </head>
-<body >
-    <div class="container">
+
+<body>
+  <div class="container">
     <div class="sidenav">
-        <div style="text-align:center;">
-            <div class="info">{{info}}</div>
-            <img src="../media/{{img_obj}}" width="100" height="100" style="border-radius: 50%;">
-        </div>
-        <a href="/post">Upload Post</a>
-        <a href="/edit_profile/">Edit Profile</a>
-        <a href="/friends">Search Friends</a>
-        <a href="/requests1">Friend Requests</a>
-        <a href="/check_friends/">Friend List</a>
-        <a href='/chat'>Chatroom</a>
-        <a href='/view_profile'>View Profile</a>
-        <a href="/">Logout</a>
+      <div style="text-align:center;">
+        <div class="info">{{info}}</div>
+        <img src="../media/{{img_obj}}" width="100" height="100" style="border-radius: 50%;">
+      </div>
+      <a href="/post">Upload Post</a>
+      <a href="/edit_profile/">Edit Profile</a>
+      <a href="/friends">Search Friends</a>
+      <a href="/requests1">Friend Requests</a>
+      <a href="/check_friends/">Friend List</a>
+      <a href="http://127.0.0.1:8001/meet/">Chatroom</a>
+      <a href='/view_profile'>View Profile</a>
+      <a href="/">Logout</a>
     </div>
     {%block main%}
     {%endblock main%}
     {% block side%}
-   
-   <div style="background-color:cyan;">
-    <h2>Gather Dashboard</h2>
-    
-    {% if img_obj %}
-    
-    
-    
-    {% endif %}
-    
-    
-    {%endblock side%}
-    
-    <table>
-    <tr >
-    <td colspan="4">
-    {% if allposts %}
-        {% for post in allposts %}
-            
-          {% if '.JPG' in post.posts|stringformat:"s"  %}      
-            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
-          {% endif %} 
-          {% if '.PNG' in post.posts|stringformat:"s" %}
-            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
-          {% endif %} 
-          {% if '.JPEG' in post.posts|stringformat:"s" %}
-            <img height= 200 width=200 src="..\media\posts\{{post.posts}}"><br/>
-          {% endif %} 
-          {% if '.mp4' in post.posts|stringformat:"s" %}
-            <video  width="400" height="400" controls >
-            <source src='..\media\posts\{{post.posts}}' type="video/mp4">
-            </video>
-          {% endif %}
-           <br/>   
-          Uploaded by user : {{post.username}}
-          <br/>
-          On date: {{post.date}}
-        <br/>   
-        Comments:
-        {%for c in comments %} 
-            
-            {% if c.post_id.post_id == post.post_id %}
-                {{c.comment}}
-                {% for u in allusers %}
-                    {% if u.email == c.email.email %} 
 
-                        <br/>by user : {{u.username}}
-                    {% endif %}
-                {% endfor %}
-                {% if c.date %}
-                    date :{{c.date}}
-                    
-                {% endif %}
-                <br/><br/>
+    <div style="background-color:cyan;">
+      <h2>Gather Dashboard</h2>
+
+      {% if img_obj %}
+
+
+
+      {% endif %}
+
+
+      {%endblock side%}
+
+      <table>
+        <tr>
+          <td colspan="4">
+            {% if allposts %}
+            {% for post in allposts %}
+
+            {% if '.JPG' in post.posts|stringformat:"s" or '.jpg' in post.posts|stringformat:"s"%}
+            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
             {% endif %}
-        {% endfor %}
-        <div class="containerform">
-        <form class="like" method="POST" action="{% url 'Add_like' %}">
-            {% csrf_token %}
-            <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
-            <button type="submit" class="like-button">
-              <i class="fas fa-heart"></i> Like
-            </button>
-          </form>
-          <form class="comment" method="POST" action="/comments/" class="comment-form">
-            {% csrf_token %}
-            <div class="form-group">
-              <input type="text" name="comment" id="comment" class="form-input" placeholder="Enter your comment..">
+            {% if '.PNG' in post.posts|stringformat:"s" or '.png' in post.posts|stringformat:"s" %}
+            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
+            {% endif %}
+            {% if '.JPEG' in post.posts|stringformat:"s" or '.jpeg' in post.posts|stringformat:"s" %}
+            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
+            {% endif %}
+            {% if '.mp4' in post.posts|stringformat:"s" or '.MP4' in post.posts|stringformat:"s" %}
+            <video width="400" height="400" controls>
+              <source src='..\media\{{post.posts}}' type="video/mp4">
+            </video>
+            {% endif %}
+            <br />
+            Uploaded by user : {{post.username}}
+            <br />
+            On date: {{post.date}}
+            <br />
+            Comments:
+            {%for c in comments %}
+
+            {% if c.post_id.post_id == post.post_id %}
+            {{c.comment}}
+            {% for u in allusers %}
+            {% if u.email == c.email.email %}
+
+            <br />by user : {{u.username}}
+            {% endif %}
+            {% endfor %}
+            {% if c.date %}
+            date :{{c.date}}
+
+            {% endif %}
+            <br /><br />
+            {% endif %}
+            {% endfor %}
+            <div class="containerform">
+              <form class="like" method="POST" action="{% url 'Add_like' %}">
+                {% csrf_token %}
+                <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+                <button type="submit" class="like-button">
+                  <i class="fas fa-heart"></i> Like
+                </button>
+              </form>
+              <form class="comment" method="POST" action="/comments/" class="comment-form">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="text" name="comment" id="comment" class="form-input" placeholder="Enter your comment..">
+                </div>
+                <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+                <button type="submit" class="form-button">Post Comment</button>
+              </form>
             </div>
-            <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
-            <button type="submit" class="form-button">Post Comment</button>
-          </form>
-        </div>          
-        {% endfor%}
-    {% endif %}
-</td>
-</tr>
-</table>
+            {% endfor%}
+            {% endif %}
+          </td>
+        </tr>
+      </table>
 
 
-</div>
-</div>
+    </div>
+  </div>
 </body>
+
 </html>
