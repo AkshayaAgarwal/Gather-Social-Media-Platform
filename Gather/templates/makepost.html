@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+  <title>Postcard</title>
   <script>
     function filevalid() {
       var input = document.getElementById('mypost');
@@ -16,37 +18,88 @@
     }
 
   </script>
+  <style>
+    .postcard {
+      margin-left: 100px;
+      width: 300px;
+      height: 300px;
+      background-color: lightblue;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .postcard input {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    .postcard button {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .post-container {
+      width: 14%;
+
+      padding: 25px;
+
+      background-color: #c5c2c2;
+
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .post-title {
+      font-family: "Times New Roman", Times, serif;
+      ;
+      font-size: 24px;
+      margin-left: 12px;
+
+      margin-bottom: 10px;
+
+    }
+  </style>
 </head>
+{% extends "dashboard.html" %}
+{%block main%}
 
 <body>
-  {% extends "dashboard.html" %}
-  {%block main%}
-
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-
-    <input type="file" id="mypost" name="mypost" onchange="return filevalid();" required>
-    <label for="mypost">Select file</label>
-
-
-    Caption: <input type="text" placeholder="Enter caption" name='caption'>
-    <button type="submit" class="btn  btn-primary mt-2">Post</button>
-
+    <div class="postcard">
+      <h2>Upload Post</h2>
+      <input type="file" id="mypost" name="mypost" onchange="return filevalid();" required>
+      <input type="text" id="textBox" placeholder="Write your caption..." name="caption">
+      <button type="submit" class="btn  btn-primary mt-2" id="postButton">Post</button>
   </form>
-  <h4>{{info2}}</h4>
-  {% if my_post %}
-  {% if category == 'image' %}
-  <div><img height=100 width=100 src='..\media\posts\{{my_post}}' id="disp">
+  </div>
+  <div class="post-container">
+    <h4 class="post-title">POSTS</h4>
+    {% if my_post %}
+    {% if category == 'image' %}
+    <img height=100 width=100 src='..\media\posts\{{my_post}}' id=" disp">
     {% endif %}
     {% if category == 'video' %}
     <video id="disp2" width="320" height="240" controls>
       <source src='..\media\posts\{{my_post}}' type="video/mp4">
     </video>
-    {% endif %}
+
+  </div>
+  {% endif %}
   </div>
   {% endif %}
   {%endblock main%}
+
+
 </body>
 
 </html>

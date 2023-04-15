@@ -77,7 +77,7 @@
       z-index: 1;
       top: 0;
       left: 0;
-      background-color: #3f51b5;
+      background-color: #63acfa;
       overflow-x: hidden;
       padding-top: 20px;
     }
@@ -105,10 +105,12 @@
     }
 
     .info {
-      font-size: 18px;
+      font-weight: bold;
+      font-size: 20px;
+      font-family: Arial, Helvetica, sans-serif;
       color: #fff;
-      background-color: #3f51b5;
-      ;
+      background-color: #63acfa;
+
       padding: 10px;
       border-radius: 5px;
     }
@@ -242,6 +244,77 @@
     .mt-2 {
       margin-top: 1em;
     }
+
+    .navbar {
+      height: 97px;
+
+      background-color: #63acfa;
+
+      padding: 20px;
+
+      margin-left: -60px;
+
+      width: 200%;
+
+      top: 0;
+
+    }
+
+
+    .navbar h1 {
+      margin: 0;
+      color: #fff;
+      left: 0;
+
+      font-size: 40px;
+
+      display: inline;
+      padding: 10px 20px;
+
+      border-radius: 5px;
+
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+
+
+    }
+
+    .navbars {
+
+
+      background-color: #63acfa;
+      margin-top: -15px;
+      padding: 20px;
+
+      margin-left: -58px;
+
+      width: 200%;
+
+      top: 0;
+
+    }
+
+
+    .navbars h1 {
+      margin-left: 23px;
+      color: #fff;
+      left: 0;
+
+      font-size: 40px;
+
+      display: inline;
+      padding: 10px 20px;
+
+      border-radius: 5px;
+
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+
+
+    }
+
+    .prof {
+      margin-top: -27px;
+      margin-left: 1200px;
+    }
   </style>
 
 </head>
@@ -250,9 +323,15 @@
   <div class="container">
     <div class="sidenav">
       <div style="text-align:center;">
-        <div class="info">{{info}}</div>
-        <img src="../media/{{img_obj}}" width="100" height="100" style="border-radius: 50%;">
+
       </div>
+      <div class="navbars">
+        <h1>
+
+          <span style="color:#ff0000;">G</span>ather
+        </h1>
+      </div>
+      <br>
       <a href="/post">Upload Post</a>
       <a href="/edit_profile/">Edit Profile</a>
       <a href="/friends">Search Friends</a>
@@ -262,90 +341,98 @@
       <a href='/view_profile'>View Profile</a>
       <a href="/">Logout</a>
     </div>
-    {%block main%}
-    {%endblock main%}
-    {% block side%}
-
-    <div style="background-color:cyan;">
-      <h2>Gather Dashboard</h2>
-
-      {% if img_obj %}
 
 
 
-      {% endif %}
+    <div class="navbar">
 
-
-      {%endblock side%}
-
-      <table>
-        <tr>
-          <td colspan="4">
-            {% if allposts %}
-            {% for post in allposts %}
-
-            {% if '.JPG' in post.posts|stringformat:"s" or '.jpg' in post.posts|stringformat:"s"%}
-            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
-            {% endif %}
-            {% if '.PNG' in post.posts|stringformat:"s" or '.png' in post.posts|stringformat:"s" %}
-            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
-            {% endif %}
-            {% if '.JPEG' in post.posts|stringformat:"s" or '.jpeg' in post.posts|stringformat:"s" %}
-            <img height=200 width=200 src="..\media\{{post.posts}}"><br />
-            {% endif %}
-            {% if '.mp4' in post.posts|stringformat:"s" or '.MP4' in post.posts|stringformat:"s" %}
-            <video width="400" height="400" controls>
-              <source src='..\media\{{post.posts}}' type="video/mp4">
-            </video>
-            {% endif %}
-            <br />
-            Uploaded by user : {{post.username}}
-            <br />
-            On date: {{post.date}}
-            <br />
-            Comments:
-            {%for c in comments %}
-
-            {% if c.post_id.post_id == post.post_id %}
-            {{c.comment}}
-            {% for u in allusers %}
-            {% if u.email == c.email.email %}
-
-            <br />by user : {{u.username}}
-            {% endif %}
-            {% endfor %}
-            {% if c.date %}
-            date :{{c.date}}
-
-            {% endif %}
-            <br /><br />
-            {% endif %}
-            {% endfor %}
-            <div class="containerform">
-              <form class="like" method="POST" action="{% url 'Add_like' %}">
-                {% csrf_token %}
-                <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
-                <button type="submit" class="like-button">
-                  <i class="fas fa-heart"></i> Like
-                </button>
-              </form>
-              <form class="comment" method="POST" action="/comments/" class="comment-form">
-                {% csrf_token %}
-                <div class="form-group">
-                  <input type="text" name="comment" id="comment" class="form-input" placeholder="Enter your comment..">
-                </div>
-                <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
-                <button type="submit" class="form-button">Post Comment</button>
-              </form>
-            </div>
-            {% endfor%}
-            {% endif %}
-          </td>
-        </tr>
-      </table>
+      <div class="prof" style="text-align:center;">
+        <div class="info">{{info}}</div>
+        <img src="../media/{{img_obj}}" width="50" height="50" style="border-radius: 50%;">
+      </div>
 
 
     </div>
+    {%block main%}
+    {%endblock main%}
+    {% block side%}
+    {% if img_obj %}
+
+
+
+    {% endif %}
+
+
+    {%endblock side%}
+
+    <table>
+      <tr>
+        <td colspan="4">
+          {% if allposts %}
+          {% for post in allposts %}
+
+          {% if '.JPG' in post.posts|stringformat:"s" or '.jpg' in post.posts|stringformat:"s"%}
+          <img height=200 width=200 src="..\media\{{post.posts}}"><br />
+          {% endif %}
+          {% if '.PNG' in post.posts|stringformat:"s" or '.png' in post.posts|stringformat:"s" %}
+          <img height=200 width=200 src="..\media\{{post.posts}}"><br />
+          {% endif %}
+          {% if '.JPEG' in post.posts|stringformat:"s" or '.jpeg' in post.posts|stringformat:"s" %}
+          <img height=200 width=200 src="..\media\{{post.posts}}"><br />
+          {% endif %}
+          {% if '.mp4' in post.posts|stringformat:"s" or '.MP4' in post.posts|stringformat:"s" %}
+          <video width="400" height="400" controls>
+            <source src='..\media\{{post.posts}}' type="video/mp4">
+          </video>
+          {% endif %}
+          <br />
+          Uploaded by user : {{post.username}}
+          <br />
+          On date: {{post.date}}
+          <br />
+          Comments:
+          {%for c in comments %}
+
+          {% if c.post_id.post_id == post.post_id %}
+          {{c.comment}}
+          {% for u in allusers %}
+          {% if u.email == c.email.email %}
+
+          <br />by user : {{u.username}}
+          {% endif %}
+          {% endfor %}
+          {% if c.date %}
+          date :{{c.date}}
+
+          {% endif %}
+          <br /><br />
+          {% endif %}
+          {% endfor %}
+          <div class="containerform">
+            <form class="like" method="POST" action="{% url 'Add_like' %}">
+              {% csrf_token %}
+              <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+              <button type="submit" class="like-button">
+                <i class="fas fa-heart"></i> Like
+              </button>
+            </form>
+            <form class="comment" method="POST" action="/comments/" class="comment-form">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="text" name="comment" id="comment" class="form-input" placeholder="Enter your comment..">
+              </div>
+              <input type="text" name="pid" value="{{post.post_id}}" style="display:none;">
+              <button type="submit" class="form-button">Post Comment</button>
+            </form>
+          </div>
+          {% endfor%}
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+
+
+
   </div>
 </body>
 

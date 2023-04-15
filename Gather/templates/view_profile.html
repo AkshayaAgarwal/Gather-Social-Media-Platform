@@ -5,41 +5,124 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .contain {
+            margin-top: 15px;
+            width: 300px;
+            margin-left: 450px;
+            padding: 20px;
+            border: 1px solid #000;
+            background-color: #edecec;
+            text-align: center;
+        }
 
+        /* CSS styles for labels */
+        .labels {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* CSS styles for image */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        /* CSS styles for the container */
+        .cont {
+            max-width: 960px;
+
+            padding: 20px;
+        }
+
+        /* CSS styles for the grid */
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* CSS styles for each post */
+        .post {
+
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #000;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        /* CSS styles for post image */
+        .post-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        /* CSS styles for caption */
+        .caption {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* CSS styles for post details */
+        .post-details {
+            font-size: 14px;
+            color: #3a3a3a;
+        }
+    </style>
 </head>
 
-<body style="font-size:30;font-style:medium;font-weight: 700;">
+<body>
     {% extends "dashboard.html" %}
     {%block main%}
-    Username : {{ my_profile.username}} <br />
-    Gender : {{my_profile.gender}}<br />
-    College: {{my_profile.college}}<br />
-    Course: {{my_profile.course}}<br />
-    Date: {{my_profile.date}}<br />
-    Phone number: {{my_profile.phone}}<br />
-    <img src="..\media\{{my_profile.images}}" width="100" height="100">
-    <br />
+    <div class="contain">
+        <img src="..\media\{{my_profile.images}}" alt="Profile Picture" class="profile-image">
+        <label class="labels">Username : {{ my_profile.username}}</label>
+        <label class="labels">Gender : {{my_profile.gender}}</label>
+        <label class="labels">College: {{my_profile.college}}</label>
+        <label class="labels">Course: {{my_profile.course}}</label>
+        <label class="labels"> Date: {{my_profile.date}}</label>
+        <label class="labels">Phone number: {{my_profile.phone}}</label>
+    </div>
+
     My posts :
     <br />
-    {% if my_posts %}
-    {% for p in my_posts %}
-    {% if '.JPG' in p.posts|stringformat:"s" or '.jpg' in p.posts|stringformat:"s" %}
-    <img src="..\media\{{p.posts}}" width="300" height="300">
-    {% elif '.JPEG' in p.posts|stringformat:"s" or '.jpeg' in p.posts|stringformat:"s" %}
-    <img src="..\media\{{p.posts}}" width="300" height="300">
-    {% elif '.PNG' in p.posts|stringformat:"s" or '.png' in p.posts|stringformat:"s" %}
-    <img src="..\media\{{p.posts}}" width="300" height="300">
-    {% elif '.mp4' in p.posts|stringformat:"s" or '.MP4' in p.posts|stringformat:"s" %}
-    <video width="320" height="240" controls>
-        <source src='..\media\{{p.posts}}' type="video/mp4">
-    </video>
-    {% endif %}
-    <br />
-    Caption: {{p.caption}}
-    <br />
+
+    <div>
+        <!-- HTML structure for the grid -->
+
+        {% if my_posts %}
+        {% for p in my_posts %}
+
+        <!-- HTML structure for each post -->
+        <div>
+            {% if '.JPG' in p.posts|stringformat:"s" or '.jpg' in p.posts|stringformat:"s" %}
+            <img src="..\media\{{p.posts}}" width="150" height="150">
+            {% elif '.JPEG' in p.posts|stringformat:"s" or '.jpeg' in p.posts|stringformat:"s" %}
+            <img src="..\media\{{p.posts}}" width="150" height="150">
+            {% elif '.PNG' in p.posts|stringformat:"s" or '.png' in p.posts|stringformat:"s" %}
+            <img src="..\media\{{p.posts}}" width="150" height="150">
+            {% elif '.mp4' in p.posts|stringformat:"s" or '.MP4' in p.posts|stringformat:"s" %}
+            <video width="320" height="240" controls>
+                {% endif %}
+                <div class="caption">Caption: {{p.caption}}</div>
+        </div>
+
+        <!-- Add more posts as needed -->
+
+    </div>
     {% endfor %}
     {% endif %}
     {%endblock%}
+
+
+
+
+
 </body>
 
 </html>

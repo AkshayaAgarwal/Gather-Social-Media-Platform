@@ -78,7 +78,7 @@ def Login(request):
                user_email = request.POST.get('email');
                user_photo = allusers[i].images;
                user_name=allusers[i].username;
-               return render(request,"dashboard.html",{'comments':comments2,'allusers':allusers,'info2':request.POST.get('email'),'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+               return render(request,"dashboard.html",{'comments':comments2,'allusers':allusers,'info2':request.POST.get('email'),'info':user_name,'img_obj':user_photo,'allposts':allposts2})
         if flag==0:
             return render(request,"login.html",{'info':'Incorrect username or password !'})
     else:
@@ -103,11 +103,11 @@ def Add_post(request):
             if allusers[i].email==user_email:
                 apost=Posts(email=allusers[i],username = allusers[i].username,date=date2,posts=mypost,caption=mycap,total_likes =0)
                 apost.save();
-                return render(request,"makepost.html",{'category':category,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allposts':allposts2,'img_obj':user_photo,'info2':'Post uploaded sucesssfully !','my_post':request.FILES.get('mypost')})
+                return render(request,"makepost.html",{'category':category,'comments':comments2,'allusers':allusers,'info':user_name,'allposts':allposts2,'img_obj':user_photo,'my_post':request.FILES.get('mypost')})
     else:
         allusers=Users_table.objects.all();
         comments2=Comments.objects.all();
-        return render(request,"makepost.html",{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,"makepost.html",{'comments':comments2,'allusers':allusers,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
     
 def Search_friend(request):
     global allusers2;
@@ -132,9 +132,9 @@ def Search_friend(request):
             if allusers[i].college == college2 and allusers[i].course == course2 and allusers[i].email != user_email:
                 if allusers[i].email not in friend_list2 and allusers[i].email not in req_list:
                     allusers2.append(allusers[i])
-        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
-        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
     
     
 def Add_friend(request):
@@ -164,9 +164,9 @@ def Add_friend(request):
                 
                 
 
-        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
-        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'search_friends.html',{'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
 
 
 
@@ -181,7 +181,7 @@ def view_requests(request):
         if req[i].email1_id==user_email and req[i].status =='unconfirmed':
             req2.append(req[i])
     
-    return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+    return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
 
 def accept_requests(request):
     allusers2=[]
@@ -230,14 +230,14 @@ def accept_requests(request):
         
         
     
-        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
         req=Requests.objects.all()
         req2=[]
         for i in range(0,len(req)):
             if req[i].email1_id==user_email:
                 req2.append(req[i])
-        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     
 def reject_request(request):
     
@@ -259,14 +259,14 @@ def reject_request(request):
         for i in range(0,len(req)):
             if req[i].email1_id==user_email:
                 req2.append(req[i])
-        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     else:
         req=Requests.objects.all()
         req2=[]
         for i in range(0,len(req)):
             if req[i].email1_id==user_email:
                 req2.append(req[i])
-        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':'User '+user_name+ ' logged in successfully !','allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
+        return render(request,'friend_req.html',{'requests':req2,'comments':comments2,'allusers':allusers,'info':user_name,'allusers2':allusers2,'img_obj':user_photo,'allposts':allposts2})
     
 
 
@@ -291,9 +291,9 @@ def Add_comment(request):
         c.save();
         comments2=Comments.objects.all();
         
-        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
     else:
-        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
 
 def Add_like(request):
     
@@ -327,9 +327,9 @@ def Add_like(request):
             c=Comments(category='like',comment='This post was liked',post_id=postid,email=user_email2)
             c.save()
             comments2=Comments.objects.all()
-        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
     else:
-        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'dashboard.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
 
 def check_friends(request):
     
@@ -347,7 +347,7 @@ def check_friends(request):
             if allusers2[i] == allusers[j].email:
                 my_friends.append(allusers[j])
     
-    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
 
 def view_profile(request):
     allusers2=[]
@@ -364,7 +364,7 @@ def view_profile(request):
         if allusers[i].email==user_email:
             break
     
-    return render(request,'view_profile.html',{'my_posts':allposts3,'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+    return render(request,'view_profile.html',{'my_posts':allposts3,'my_profile':allusers[i],'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
 
 def edit_profile(request):
     global user_photo
@@ -398,9 +398,9 @@ def edit_profile(request):
             allusers[i].images = request.FILES.get('my_img')
         allusers[i].save();
         user_photo= allusers[i].images
-        return render(request,'edit_profile.html',{'my_profile_update':'Update Successful','comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'edit_profile.html',{'my_profile_update':'Update Successful','comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
     else:
-        return render(request,'edit_profile.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+        return render(request,'edit_profile.html',{'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
      
       
 def del_friend(request):
@@ -425,7 +425,7 @@ def del_friend(request):
             Friends.objects.filter(fid = friends[i].fid).delete()
         my_friends=Friends.objects.filter(email1_id = user_email)
         
-    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':'User '+user_name+ ' logged in successfully !','img_obj':user_photo,'allposts':allposts2})
+    return render(request,"check_friends.html",{'my_friends':my_friends,'comments':comments2,'allusers':allusers,'info2':user_email,'info':user_name,'img_obj':user_photo,'allposts':allposts2})
 
 
 def forgot(request):
@@ -457,4 +457,4 @@ def forgotpasswordprocess(request):
         return redirect('Login')  # Replace with the correct URL pattern name for login
     except Users_table.DoesNotExist:
         messages.error(request, 'Wrong email details')
-        return render(request, 'forgot.html')  # Render the forgot.html template with an error message
+        return render(request, 'forgot.html')  # Render the forgot.html template with an error messages

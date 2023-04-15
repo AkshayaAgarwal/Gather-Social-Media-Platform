@@ -1,40 +1,92 @@
 {% extends "dashboard.html" %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check friends</title>
 
-    
+<head>
+
+    <title>Check friends</title>
+    <style>
+        /* CSS styles for the head tag */
+        .header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* CSS styles for the container */
+        .containe {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+
+        /* CSS styles for labels and button */
+        .label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 
-    
+
 {% block main %}
-<body >
-<p style="font-weight: 700;font-size: larger;">Your Friend List</p>
-{% if my_friends %}
-    {% for friend in my_friends %} 
-    <p style="font-weight: 700;">
-        Name: {{friend.username}}<br/>
-        Course: {{friend.course}}<br/>
-        College: {{friend.college}}<br/>
-        {% if friend.images %}
-        </p>
-        <img src="..\media\{{friend.images}}" width="200" height="200" style="border:10px solid blue">
-                
-        {% endif %}
-        <form style="align-items: start;" action="/del_friend/" method="POST">
-            {% csrf_token %}
-            <input type="text" name="my_friend" value={{friend.email}} style="display: none;">
-            <input type="submit" class="btn  btn-primary mt-2" value="Remove {{friend.username}}"></input>
-        </form>
-        <br/>
-    {% endfor %} 
-{% endif %}
+
+<body>
+
+    <div style=" background-color: #f2f2f2;
+    padding: 10px;
+    margin-top:20px ;
+    text-align: center;
+    width: 100%;">
+        <h1>Your Friend List</h1>
+
+
+        {% if my_friends %}
+        {% for friend in my_friends %}
+        <!-- HTML structure for the container -->
+        <div style="  width: 300px;
+    margin-top: 20px;
+    margin-left: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    background-color: #fff;">
+            <label style=" display: block;
+        margin-bottom: 10px;"> Name: {{friend.username}}</label>
+            <label class="label">Course: {{friend.course}}</label>
+            <label class="label"> College: {{friend.college}}</label>
+            {% if friend.images %}
+            <img src="..\media\{{friend.images}}" width="60" height="60x">
+            {% endif %}
+            <form style="align-items: start;" action="/del_friend/" method="POST">
+                {% csrf_token %}
+                <input type="text" name="my_friend" value={{friend.email}} style="display: none;">
+                <button style=" background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;" value="Remove {{friend.username}}">Remove</button>
+            </form>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
 </body>
-{% endblock main %} 
+{% endblock main %}
 
 
 </html>
