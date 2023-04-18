@@ -1,44 +1,131 @@
 {% extends "dashboard.html" %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <style>
+        .card {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .college {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .course {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            margin-right: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:last-child {
+            margin-right: 0;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
-{% block main %}
-{% if requests %} 
-    <h4>Friend Requests</h4>
+    {% block main %}
+    {% if requests %}
+    <h2 style="align-items: center;">Friend Requests</h2>
     {% for i in requests %}
-        {% for j in allusers %} 
-            {% if i.email2 == j.email %} 
-                Username <p style="font-weight: 700;">{{j.username}}</p>
-                <br/>
-                College <p>{{j.college}}</p>
-                <br/>
-                Course <p>{{j.course}}</p>
-                <br/>
-                Id card image <img src="../media/{{j.images}}" width="70" height="70" ">
-                <br/>
-                <br/>
-                <form method="POST" action="/rej_acc1/">
-                    {% csrf_token %}
+    {% for j in allusers %}
+    {% if i.email2 == j.email %}
+    <div class="card" style="  max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    text-align: center;">
+        <img style=" width: 150px;
+        height: 120px;
+        margin-left:50px ;
+        border-radius: 50%;
+        margin-bottom: 10px;" src="../media/{{j.images}}" width="70" height="70" alt="profile">
+
+        <p class="course" style=" margin-top: 0;
+        margin-bottom: 20px;
+        font-style: italic;
+        color: #555;"><b>Username:</b>{{j.username}}</p>
+        <p class="course" style=" margin-top: 0;
+        margin-bottom: 20px;
+        font-style: italic;
+        color: #555;"><b>College:</b>{{j.college}}</p>
+        <p class="course" style=" margin-top: 0;
+        margin-bottom: 20px;
+        font-style: italic;
+        color: #555;"><b>Course:</b>{{j.course}}</p>
+        <div class="buttons" style=" display: flex;
+        justify-content: center;">
+            <form method=" POST" action="/rej_acc1/">
+                {% csrf_token %}
                 <input type="text" value="{{j.email}}" name="reqfriend" style="display:none;">
-                <input type="submit" value="Accept">
-                </form>
-                <form method="POST" action="/rej_acc2/">
-                    {% csrf_token %}
+                <button class="btn" style=" padding: 8px 16px;
+                margin-right: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;" value="Accept">Accept</button>
+            </form>
+            <form method="POST" action="/rej_acc2/">
+                {% csrf_token %}
                 <input type="text" value="{{j.email}}" name="reqfriend" style="display:none;">
-                <input type="submit" value="reject">
-                </form>
-                <br/>
-            {% endif %}
-        {% endfor %}
+                <button class="btn" style=" padding: 8px 16px;
+                margin-right: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;" value="Reject">Reject</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
     {% endfor %}
-{% endif %}
-{% endblock main %}
+    {% endfor %}
+    {% endif %}
+    {% endblock main %}
+
+
 </body>
+
 </html>
